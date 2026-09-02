@@ -1,0 +1,52 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.card__pair {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-3);
+  align-items: end;
+}
+
+/* Nudge the swap control down so it sits level with the two fields
+   rather than with their labels. */
+.card__swap {
+  padding-bottom: var(--space-1);
+}
+
+.card__notice {
+  margin: 0;
+  padding: var(--space-3);
+  font-size: var(--size-meta);
+  color: var(--color-error);
+  background: var(--color-error-wash);
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 560px) {
+  .card {
+    padding: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .card__pair {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+
+  /* Stack the pair and centre the swap between the two selectors. */
+  .card__swap {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+}

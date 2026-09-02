@@ -1,0 +1,23 @@
+.swap {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: var(--tap-target);
+  height: var(--tap-target);
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.swap:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.swap__icon {
+  transition: transform var(--duration-base) var(--ease-out);
+}

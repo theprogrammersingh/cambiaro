@@ -1,0 +1,58 @@
+.amount {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.amount__field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target);
+  padding: 0 var(--space-3);
+  background: var(--color-surface-raised);
+  /* Transparent rather than none, so the focus ring can't shift layout. */
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.amount__field:focus-within {
+  border-color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.amount__field--invalid {
+  border-color: var(--color-error);
+}
+
+.amount__input {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-2) 0;
+  font-size: var(--size-input);
+  font-weight: 500;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+.amount__chip {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--size-meta);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.amount__error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  font-size: var(--size-meta);
+  color: var(--color-error);
+}
