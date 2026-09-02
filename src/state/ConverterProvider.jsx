@@ -39,6 +39,7 @@ export function ConverterProvider({ children }) {
   const [error, setError] = useState(null)
 
   const [range, setRangeState] = useState('30D')
+  const [customRange, setCustomRange] = useState(null) // { start, end }
   const [series, setSeries] = useState([])
   const [seriesStatus, setSeriesStatus] = useState('idle')
 
@@ -189,8 +190,12 @@ export function ConverterProvider({ children }) {
     async (input = {}, { origin = 'human' } = {}) => {
       const seriesFrom = input.from ?? from
       const seriesTo = input.to ?? to
-      const end = input.end ?? todayIso()
-      const start = input.start ?? shiftIso(end, -(RANGES[range] ?? 30))
+      const preset = range === 'custom' ? null : (RANGES[range] ?? 30)
+      const end = input.end ?? (preset === null ? customRange?.end : null) ?? todayIso()
+      const start =
+        input.start ??
+        (preset === null ? customRange?.start : null) ??
+        shiftIso(end, -(preset ?? 30))
 
       if (origin === 'agent') pulse('chart')
 
@@ -214,7 +219,7 @@ export function ConverterProvider({ children }) {
         throw err
       }
     },
-    [from, to, range, pulse],
+    [from, to, range, customRange, pulse],
   )
 
   const setAmount = useCallback(
@@ -260,8 +265,9 @@ export function ConverterProvider({ children }) {
   )
 
   const setRange = useCallback(
-    (value, { origin = 'human' } = {}) => {
+    (value, bounds, { origin = 'human' } = {}) => {
       setRangeState(value)
+      setCustomRange(value === 'custom' ? (bounds ?? null) : null)
       if (origin === 'agent') pulse('chart')
     },
     [pulse],
@@ -280,7 +286,7 @@ export function ConverterProvider({ children }) {
   useEffect(() => {
     if (currencies.length === 0) return
     loadSeries().catch(() => {})
-  }, [from, to, range, currencies.length])
+  }, [from, to, range, customRange, currencies.length])
 
   const value = {
     currencies,
@@ -295,6 +301,7 @@ export function ConverterProvider({ children }) {
     error: amountError ?? error,
     amountError,
     range,
+    customRange,
     series,
     seriesStatus,
     activity,
