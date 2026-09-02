@@ -1,6 +1,22 @@
+import { AgentActivityPanel } from './components/AgentActivityPanel.jsx'
 import { ConverterCard } from './components/ConverterCard.jsx'
 import { ConverterProvider } from './state/ConverterProvider.jsx'
+import { useWebMcpTools } from './webmcp/useWebMcpTools.js'
 import './App.css'
+
+/**
+ * Inside the provider, so the tools bind to the same state the UI renders.
+ */
+function Converter() {
+  const { tools, support } = useWebMcpTools()
+
+  return (
+    <>
+      <ConverterCard />
+      <AgentActivityPanel tools={tools} support={support} />
+    </>
+  )
+}
 
 function App() {
   return (
@@ -13,7 +29,7 @@ function App() {
           </p>
         </header>
         <main className="app__main">
-          <ConverterCard />
+          <Converter />
         </main>
       </div>
     </ConverterProvider>

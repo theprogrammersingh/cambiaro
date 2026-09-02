@@ -1,0 +1,233 @@
+/* The panel is a transparency aid, so it stays visually lighter than the
+   primary card: no shadow, tighter type, muted until opened (§9). */
+
+.agent {
+  width: 100%;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.agent__header {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  width: 100%;
+  min-height: var(--tap-target);
+  padding: 0 var(--space-4);
+  background: none;
+  border: none;
+}
+
+.agent__dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.agent__dot--live {
+  background: var(--color-agent);
+  box-shadow: 0 0 0 3px var(--color-agent-wash);
+}
+
+.agent__title {
+  font-size: var(--size-body);
+  font-weight: 600;
+}
+
+.agent__count {
+  margin-left: auto;
+}
+
+.agent__caret {
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.agent__caret--open {
+  transform: rotate(180deg);
+}
+
+.agent__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+.agent__support {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  margin: var(--space-2) 0 0;
+  font-size: var(--size-meta);
+  color: var(--color-success);
+}
+
+.agent__support--off {
+  color: var(--color-warning);
+}
+
+.agent__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.agent__section h2 {
+  margin: 0;
+}
+
+.agent__tools,
+.agent__log {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.agent__tool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.agent__chip {
+  padding: 2px var(--space-2);
+  font-family: inherit;
+  font-size: var(--size-meta);
+  font-weight: 600;
+  color: var(--color-agent);
+  background: var(--color-agent-wash);
+  border-radius: var(--radius-sm);
+}
+
+.agent__tool .meta {
+  flex: 1;
+  min-width: 180px;
+}
+
+.agent__entry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface-raised);
+  border-left: 2px solid var(--color-agent);
+  border-radius: var(--radius-sm);
+}
+
+.agent__entry--error {
+  border-left-color: var(--color-error);
+}
+
+.agent__entry-head {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.agent__entry-head .meta:last-child {
+  margin-left: auto;
+}
+
+.agent__entry-input {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.agent__entry-result {
+  display: flex;
+  gap: var(--space-1);
+  align-items: baseline;
+  margin: 0;
+  font-size: var(--size-meta);
+}
+
+.agent__entry--error .agent__entry-result {
+  color: var(--color-error);
+}
+
+.agent__empty {
+  margin: 0;
+}
+
+.agent__policy {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.agent__segmented {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--color-surface-raised);
+  border-radius: var(--radius-sm);
+}
+
+.agent__segment {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--size-meta);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+.agent__segment--active {
+  color: var(--color-agent);
+  background: var(--color-surface);
+}
+
+.agent__approval {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3);
+  background: var(--color-agent-wash);
+  border: 1px solid var(--color-agent);
+  border-radius: var(--radius-sm);
+}
+
+.agent__approval-text {
+  margin: 0;
+  font-size: var(--size-meta);
+}
+
+.agent__approval-actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.agent__btn {
+  min-height: 32px;
+  padding: 0 var(--space-3);
+  font-size: var(--size-meta);
+  font-weight: 600;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.agent__btn--primary {
+  color: #fff;
+  background: var(--color-agent);
+  border-color: var(--color-agent);
+}
+
+.agent__btn[disabled] {
+  opacity: 0.6;
+}

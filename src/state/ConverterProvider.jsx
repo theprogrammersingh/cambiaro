@@ -45,6 +45,8 @@ export function ConverterProvider({ children }) {
   const [activity, setActivity] = useState([])
   const [pulses, setPulses] = useState({})
   const [approvalMode, setApprovalMode] = useState('auto') // auto|confirm
+  const [pendingApproval, setPendingApproval] = useState(null)
+  const approvalResolver = useRef(null)
 
   const conversionId = useRef(0)
   const seriesId = useRef(0)
@@ -62,6 +64,28 @@ export function ConverterProvider({ children }) {
       for (const field of fields) next[field] = (next[field] ?? 0) + 1
       return next
     })
+  }, [])
+
+  /**
+   * Nothing here moves money, so state-changing tools are auto-approved by
+   * default. The mode is still switchable, because approval policy is a
+   * judgement call a page should be able to show both sides of.
+   */
+  const requestApproval = useCallback(
+    (toolName, input) => {
+      if (approvalMode === 'auto') return Promise.resolve(true)
+      return new Promise((resolve) => {
+        approvalResolver.current = resolve
+        setPendingApproval({ tool: toolName, input })
+      })
+    },
+    [approvalMode],
+  )
+
+  const resolveApproval = useCallback((approved) => {
+    approvalResolver.current?.(approved)
+    approvalResolver.current = null
+    setPendingApproval(null)
   }, [])
 
   const logToolCall = useCallback((entry) => {
@@ -277,6 +301,9 @@ export function ConverterProvider({ children }) {
     pulses,
     approvalMode,
     setApprovalMode,
+    pendingApproval,
+    requestApproval,
+    resolveApproval,
     logToolCall,
     actions: {
       convert,

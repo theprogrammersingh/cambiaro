@@ -1,0 +1,73 @@
+.console__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.console__tab {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--size-meta);
+  color: var(--color-text-secondary);
+  background: var(--color-surface-raised);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+}
+
+.console__tab--active {
+  color: var(--color-agent);
+  background: var(--color-agent-wash);
+  border-color: var(--color-agent);
+}
+
+.console__input {
+  width: 100%;
+  padding: var(--space-2);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--size-meta);
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+}
+
+.console__run {
+  align-self: flex-start;
+  min-height: 32px;
+}
+
+.console__output {
+  display: block;
+  padding: var(--space-3);
+  background: var(--color-success-wash);
+  border-radius: var(--radius-sm);
+}
+
+.console__output--error {
+  background: var(--color-error-wash);
+}
+
+.console__output-text {
+  margin: 0;
+  font-size: var(--size-meta);
+}
+
+.console__output--error .console__output-text {
+  color: var(--color-error);
+}
+
+.console__details {
+  margin-top: var(--space-2);
+}
+
+.console__details summary {
+  cursor: pointer;
+}
+
+.console__pre {
+  max-height: 220px;
+  margin: var(--space-2) 0 0;
+  overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+}
