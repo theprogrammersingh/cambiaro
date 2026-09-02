@@ -18,7 +18,7 @@ import { currencyCodeSchema, isoDateSchema } from './validate.js'
 const AGENT = { origin: 'agent' }
 
 /** Reject unknown codes before spending a request on them. */
-function assertKnown(ctx, code, field) {
+function assertKnown(ctx, code) {
   const upper = String(code).toUpperCase()
   if (!ctx.isKnownCurrency(upper)) {
     throw new Error(`Couldn't find that currency: ${code}. Try listCurrencies to see the options.`)
