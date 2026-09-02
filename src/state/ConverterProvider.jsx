@@ -149,11 +149,18 @@ export function ConverterProvider({ children }) {
 
       try {
         const row = await getRate({ base: nextFrom, quote: nextTo, date: nextDate })
-        if (id !== conversionId.current) return null // superseded
+
+        // Being superseded means a newer request owns the *display*; it does
+        // not make this answer wrong. So skip the state commit but still
+        // return the result, or a caller that asked for this exact conversion
+        // (a tool, say) would get an error for a lookup that succeeded.
+        const owns = id === conversionId.current
 
         if (!row) {
-          setOutcome(null)
-          setStatus('empty')
+          if (owns) {
+            setOutcome(null)
+            setStatus('empty')
+          }
           return {
             amount: nextAmount,
             from: nextFrom,
@@ -166,8 +173,10 @@ export function ConverterProvider({ children }) {
         }
 
         const result = nextAmount * row.rate
-        setOutcome({ rate: row.rate, result, date: row.date })
-        setStatus('ready')
+        if (owns) {
+          setOutcome({ rate: row.rate, result, date: row.date })
+          setStatus('ready')
+        }
         return {
           amount: nextAmount,
           from: nextFrom,
@@ -177,9 +186,11 @@ export function ConverterProvider({ children }) {
           date: row.date,
         }
       } catch (err) {
-        if (id !== conversionId.current || err.name === 'AbortError') return null
-        setStatus('error')
-        setError(err.message)
+        if (err.name === 'AbortError') return null
+        if (id === conversionId.current) {
+          setStatus('error')
+          setError(err.message)
+        }
         throw err
       }
     },
@@ -209,13 +220,15 @@ export function ConverterProvider({ children }) {
           end,
           group: input.group,
         })
-        if (id !== seriesId.current) return null
-        setSeries(rows)
-        setSeriesStatus(rows.length === 0 ? 'empty' : 'ready')
+        // Same rule as convert: commit only if still current, return either way.
+        if (id === seriesId.current) {
+          setSeries(rows)
+          setSeriesStatus(rows.length === 0 ? 'empty' : 'ready')
+        }
         return { from: seriesFrom, to: seriesTo, start, end, points: rows.length, rates: rows }
       } catch (err) {
-        if (id !== seriesId.current || err.name === 'AbortError') return null
-        setSeriesStatus('error')
+        if (err.name === 'AbortError') return null
+        if (id === seriesId.current) setSeriesStatus('error')
         throw err
       }
     },
@@ -278,9 +291,13 @@ export function ConverterProvider({ children }) {
   useEffect(() => {
     if (currencies.length === 0) return
     if (amountProblem(debouncedAmount)) return
+    // Called with no arguments on purpose. `convert` reads the *live* inputs
+    // it closes over, whereas passing the debounced amount would write that
+    // stale value back into state — clobbering a newer amount a tool had just
+    // set, and leaving the UI disagreeing with what the tool returned.
     // `convert` is deliberately not a dependency: its identity changes on
     // every input edit, so depending on it would re-run this effect in a loop.
-    convert({ amount: Number(debouncedAmount), from, to, date }).catch(() => {})
+    convert().catch(() => {})
   }, [debouncedAmount, from, to, date, currencies.length])
 
   useEffect(() => {
