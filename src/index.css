@@ -207,3 +207,88 @@ button {
     background-color: var(--color-agent-wash);
   }
 }
+
+/* Static content below the app: the same facts the interface presents, in a
+   form crawlers and answer engines can read without running the bundle.
+   Deliberately quiet — it must not compete with the converter itself. */
+.about {
+  width: 100%;
+  max-width: var(--card-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-4) var(--space-12);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  font-size: var(--size-body);
+  line-height: 1.6;
+}
+
+.about__block {
+  margin-bottom: var(--space-8);
+}
+
+.about h2 {
+  margin: 0 0 var(--space-3);
+  color: var(--color-text-primary);
+  font-size: var(--size-body);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.about h3 {
+  margin: var(--space-4) 0 var(--space-1);
+  color: var(--color-text-primary);
+  font-size: var(--size-body);
+  font-weight: 600;
+}
+
+.about p {
+  margin: 0 0 var(--space-3);
+}
+
+.about ul {
+  margin: 0;
+  padding-left: var(--space-4);
+}
+
+.about li {
+  margin-bottom: var(--space-1);
+}
+
+.about a {
+  color: var(--color-accent);
+}
+
+.about code {
+  padding: 1px var(--space-1);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--size-meta);
+  background: var(--color-surface-raised);
+  border-radius: var(--radius-sm);
+}
+
+.about__tools {
+  margin: 0;
+}
+
+.about__tools dt {
+  margin-top: var(--space-2);
+}
+
+.about__tools dd {
+  margin: 0 0 0 var(--space-3);
+  font-size: var(--size-meta);
+}
+
+.about__colophon {
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--size-meta);
+}
+
+@media (max-width: 560px) {
+  .about {
+    padding: var(--space-6) var(--space-3) var(--space-8);
+  }
+}

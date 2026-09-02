@@ -1,17 +1,17 @@
 # Cambiaro
 
-A fast, keyless currency converter, and a working WebMCP reference.
+A currency converter for people and AI agents.
 
 **Live at [cambiaro.programmersingh.dev](https://cambiaro.programmersingh.dev)**
 
-Cambiaro is a single-screen currency converter built as a complete, readable reference for
-[WebMCP](https://github.com/webmachinelearning/webmcp): every distinct user
-intent in the UI is also registered as a typed, agent-invokable tool, so a
-browser agent can operate the page exactly as a person would — without
-scraping the DOM.
+Cambiaro converts between 165 world currencies using live and historical
+European Central Bank reference rates. It installs as an offline-capable app,
+and every action in its interface is also a typed tool an AI agent can call
+through [WebMCP](https://github.com/webmachinelearning/webmcp) — so an agent
+operates the converter the same way a person does, without scraping the DOM.
 
-Rates come from the free, keyless [Frankfurter API](https://api.frankfurter.dev).
-No backend, no API key, no accounts.
+Rates come from the [Frankfurter API](https://api.frankfurter.dev). It runs
+entirely in the browser: no backend, no build-time secrets.
 
 ## Running it
 
@@ -86,3 +86,20 @@ attributable at a glance.
 Where WebMCP isn't available the page falls back to an internal registry: the
 tools stay listed and runnable from the console, and a real agent is picked up
 automatically once the browser supports it.
+
+## Deployment
+
+Pushing to `main` builds and publishes to GitHub Pages via
+`.github/workflows/deploy.yml`. The workflow lints, regenerates the icons (which
+catches a stale committed asset), builds, and deploys `dist/`.
+
+The custom domain is set by `public/CNAME`, and needs a DNS record pointing
+`cambiaro` at `theprogrammersingh.github.io`.
+
+## Discoverability
+
+`public/llms.txt` gives answer engines a plain-text summary of what the app does
+and how an agent can drive it. `index.html` carries `SoftwareApplication`,
+`WebSite` and `FAQPage` structured data, and the static section below the app
+states the same facts in markup — so a crawler that never runs the bundle still
+reads a real page rather than an empty `<div id="root">`.

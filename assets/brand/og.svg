@@ -1,16 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <!-- Dark palette from the design tokens: ink ground, accent tile, dark-mode
-       text colours. -->
   <rect width="1200" height="630" fill="#0F1115"/>
-
-  <!-- Hairline frame, border token (dark) -->
   <rect x="0.5" y="0.5" width="1199" height="629" fill="none" stroke="#2A2F3A"/>
 
-  <!-- Mark -->
-  <g transform="translate(96 168)">
-    <rect width="180" height="180" rx="40" ry="40" fill="#2F6FED"/>
-    <g transform="scale(0.3516)" fill="none" stroke="#FFFFFF" stroke-width="38"
-       stroke-linecap="round" stroke-linejoin="round">
+  <g transform="translate(96 150)">
+    <rect width="164" height="164" rx="36" ry="36" fill="#2F6FED"/>
+    <g transform="translate(82 82) scale(0.3203) translate(-256 -256)" fill="none" stroke="#FFFFFF"
+       stroke-width="38" stroke-linecap="round" stroke-linejoin="round">
       <path d="M146 198 H350"/>
       <path d="M302 150 L356 198 L302 246"/>
       <path d="M366 314 H162"/>
@@ -18,19 +13,26 @@
     </g>
   </g>
 
-  <!-- Wordmark and tagline -->
   <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
-    <text x="330" y="252" fill="#F5F6F8" font-size="92" font-weight="700"
-          letter-spacing="-2">Cambiaro</text>
-    <text x="330" y="318" fill="#9AA1AE" font-size="34" font-weight="400">Live and historical exchange rates.</text>
-    <text x="330" y="366" fill="#9AA1AE" font-size="34" font-weight="400">No account, no key.</text>
-    <text x="330" y="446" fill="#5B8DF6" font-size="28" font-weight="600"
-          letter-spacing="0.5">cambiaro.programmersingh.dev</text>
+    <text x="304" y="228" fill="#F5F6F8" font-size="96" font-weight="700" letter-spacing="-2.5">Cambiaro</text>
+    <text x="306" y="292" fill="#C7CCD6" font-size="37" font-weight="500">A currency converter for people and AI agents.</text>
+    <text x="306" y="344" fill="#9AA1AE" font-size="30" font-weight="400">165 currencies · live and historical rates</text>
   </g>
 
-  <!-- A real quoted rate, so the card shows the product doing its job -->
-  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="end">
-    <text x="1104" y="536" fill="#5B6270" font-size="26" font-weight="600"
-          letter-spacing="1.2">1 EUR = 1.1603 USD</text>
+  <!-- Capability pills: what the product is, rather than what it lacks -->
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="25" font-weight="600">
+    <g transform="translate(306 396)">
+      <rect width="268" height="58" rx="29" fill="#182338" stroke="#2F6FED"/>
+      <text x="134" y="37" fill="#5B8DF6" text-anchor="middle">Installable app</text>
+    </g>
+    <g transform="translate(594 396)">
+      <rect width="300" height="58" rx="29" fill="#1E1A33" stroke="#7C4FE0"/>
+      <text x="150" y="37" fill="#A385F0" text-anchor="middle">WebMCP agent tools</text>
+    </g>
+  </g>
+
+  <g font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+    <text x="306" y="536" fill="#5B8DF6" font-size="28" font-weight="600" letter-spacing="0.4">cambiaro.programmersingh.dev</text>
+    <text x="1104" y="536" fill="#5B6270" font-size="26" font-weight="600" letter-spacing="1.2" text-anchor="end">1 EUR = 1.1603 USD</text>
   </g>
 </svg>

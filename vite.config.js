@@ -20,7 +20,7 @@ export default defineConfig({
         name: 'Cambiaro — Currency Converter',
         short_name: 'Cambiaro',
         description:
-          'Convert between 165 world currencies with live and historical exchange rates. No account, no key.',
+          'Convert 165 world currencies with live and historical exchange rates. Installable, works offline, and operable by AI agents through built-in WebMCP tools.',
         start_url: '/',
         scope: '/',
         display: 'standalone',

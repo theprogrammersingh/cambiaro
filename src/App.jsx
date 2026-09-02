@@ -40,7 +40,7 @@ function App() {
         <header className="app__header">
           <h1 className="app__title">Cambiaro</h1>
           <p className="app__subtitle">
-            Live and historical exchange rates. No account, no key.
+            Live and historical rates for 165 currencies, for people and AI agents.
           </p>
         </header>
         <main className="app__main">

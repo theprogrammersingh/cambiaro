@@ -4,20 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-    <title>Cambiaro — Fast Currency Converter, Live &amp; Historical Rates</title>
+    <title>Cambiaro — Currency Converter for People and AI Agents</title>
     <meta
       name="description"
-      content="Convert between 165 world currencies with live and historical exchange rates. No ads, no account, no API key — and every action is available to AI agents via WebMCP."
+      content="Convert 165 world currencies with live and historical exchange rates from the European Central Bank. Install Cambiaro as an app, and let AI agents run conversions directly through its built-in WebMCP tools."
     />
     <link rel="canonical" href="https://cambiaro.programmersingh.dev/" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
 
-    <!-- Matches the app background in each scheme so the browser chrome blends in -->
     <meta name="theme-color" content="#F7F8FA" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0F1115" media="(prefers-color-scheme: dark)" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://api.frankfurter.dev" crossorigin />
+    <link rel="dns-prefetch" href="https://api.frankfurter.dev" />
 
     <meta name="application-name" content="Cambiaro" />
     <meta name="apple-mobile-web-app-title" content="Cambiaro" />
@@ -27,49 +32,232 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Cambiaro" />
-    <meta property="og:title" content="Cambiaro — Fast Currency Converter" />
+    <meta property="og:title" content="Cambiaro — Currency Converter for People and AI Agents" />
     <meta
       property="og:description"
-      content="Live and historical exchange rates for 165 currencies. No account, no key."
+      content="Convert 165 currencies with live and historical rates. Installable as an app, and operable by AI agents through built-in WebMCP tools."
     />
     <meta property="og:url" content="https://cambiaro.programmersingh.dev/" />
     <meta property="og:image" content="https://cambiaro.programmersingh.dev/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Cambiaro — live and historical exchange rates." />
+    <meta
+      property="og:image:alt"
+      content="Cambiaro — a currency converter for people and AI agents. Installable app with WebMCP agent tools."
+    />
     <meta property="og:locale" content="en" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Cambiaro — Fast Currency Converter" />
+    <meta name="twitter:title" content="Cambiaro — Currency Converter for People and AI Agents" />
     <meta
       name="twitter:description"
-      content="Live and historical exchange rates for 165 currencies. No account, no key."
+      content="Convert 165 currencies with live and historical rates. Installable as an app, and operable by AI agents through built-in WebMCP tools."
     />
     <meta name="twitter:image" content="https://cambiaro.programmersingh.dev/og-image.png" />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Cambiaro",
-        "url": "https://cambiaro.programmersingh.dev/",
-        "description": "Convert between 165 world currencies using live and historical exchange rates, with no account or API key required.",
-        "applicationCategory": "FinanceApplication",
-        "operatingSystem": "Any",
-        "browserRequirements": "Requires JavaScript",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "featureList": [
-          "Live exchange rates for 165 currencies",
-          "Historical rates back to 1999",
-          "Rate history charts",
-          "Works offline once loaded",
-          "Agent-callable tools via WebMCP"
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "@id": "https://cambiaro.programmersingh.dev/#app",
+            "name": "Cambiaro",
+            "url": "https://cambiaro.programmersingh.dev/",
+            "description": "A currency converter for people and AI agents. Converts 165 world currencies using live and historical European Central Bank reference rates, installs as an offline-capable app, and exposes every action as a WebMCP tool an AI agent can call.",
+            "applicationCategory": "FinanceApplication",
+            "applicationSubCategory": "Currency Converter",
+            "operatingSystem": "Any",
+            "browserRequirements": "Requires JavaScript",
+            "softwareRequirements": "A modern web browser",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "featureList": [
+              "Convert between 165 world currencies",
+              "Live exchange rates from the European Central Bank",
+              "Historical rates back to 4 January 1999",
+              "Rate history charts over 7, 30 and 90 day ranges",
+              "Installable as a Progressive Web App",
+              "Works offline using the last known rates",
+              "Seven WebMCP tools callable by AI agents"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://cambiaro.programmersingh.dev/#website",
+            "url": "https://cambiaro.programmersingh.dev/",
+            "name": "Cambiaro",
+            "description": "Currency converter for people and AI agents.",
+            "inLanguage": "en"
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://cambiaro.programmersingh.dev/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Where do Cambiaro's exchange rates come from?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Rates are European Central Bank reference rates, retrieved through the Frankfurter API. The ECB publishes them once per working day at around 16:00 CET, so a rate is dated to the day it was published rather than the moment you look at it."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How far back do the historical rates go?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Back to 4 January 1999 for most currencies, which is when the euro reference rates began. Currencies added later start from their own first published date, and Cambiaro's date picker limits you to the range each pair actually covers."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can an AI agent use Cambiaro?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Cambiaro registers seven WebMCP tools on document.modelContext: convertCurrency, swapCurrencies, setBaseCurrency, setQuoteCurrency, listCurrencies, getHistoricalRate and getRateTimeSeries. An agent can call them directly and receive typed results, with no DOM scraping. Every call is reflected in the visible interface and logged in the Agent Activity panel."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I install Cambiaro and use it offline?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Cambiaro is a Progressive Web App, so it can be installed to a phone home screen or desktop. Rate responses are cached, so opening it without a network shows the last known rates clearly labelled with the date they were published."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does Cambiaro support cryptocurrency?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Cambiaro covers the 165 fiat currencies tracked by the European Central Bank. Bitcoin and other cryptocurrencies are out of scope."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How much does Cambiaro cost?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Nothing. Cambiaro is free, runs entirely in the browser, and needs no account or API key."
+                }
+              }
+            ]
+          }
         ]
       }
     </script>
   </head>
   <body>
     <div id="root"></div>
+
+    <!--
+      Static content below the app. It is here for two audiences that do not run
+      the React bundle: search crawlers, and the answer engines that summarise
+      pages without executing JavaScript. It states the same facts the app does,
+      and it mirrors the FAQ structured data above so the two cannot disagree.
+    -->
+    <footer class="about">
+      <section class="about__block">
+        <h2>About Cambiaro</h2>
+        <p>
+          <strong>Cambiaro</strong> is a currency converter for people and AI agents. It
+          converts between <strong>165 world currencies</strong> using live and historical
+          exchange rates published by the European Central Bank, shows how a pair has moved
+          over time, and installs to a phone or desktop as an offline-capable app.
+        </p>
+        <p>
+          What makes it unusual is that every action in the interface is also a typed tool an
+          AI agent can call directly, through the emerging
+          <a href="https://github.com/webmachinelearning/webmcp" rel="noopener">WebMCP</a>
+          standard — so an agent operates the converter the same way a person does, and you can
+          watch it happen.
+        </p>
+      </section>
+
+      <section class="about__block">
+        <h2>What you can do with it</h2>
+        <ul>
+          <li>Convert an amount between any two of 165 currencies, updated as you type.</li>
+          <li>Look up what a rate was on a specific past date, back to 4 January 1999.</li>
+          <li>Chart how a currency pair has moved over the last 7, 30 or 90 days.</li>
+          <li>Install it to your home screen and keep converting when you are offline.</li>
+          <li>Let an AI agent run any of those actions through seven WebMCP tools.</li>
+        </ul>
+      </section>
+
+      <section class="about__block">
+        <h2>Agent tools</h2>
+        <p>
+          Cambiaro registers these tools on <code>document.modelContext</code>, each with its
+          own JSON Schema and typed result:
+        </p>
+        <dl class="about__tools">
+          <dt><code>convertCurrency</code></dt>
+          <dd>Convert an amount between two currencies, optionally as of a past date.</dd>
+          <dt><code>swapCurrencies</code></dt>
+          <dd>Swap the two currencies and reconvert.</dd>
+          <dt><code>setBaseCurrency</code></dt>
+          <dd>Change the currency being converted from.</dd>
+          <dt><code>setQuoteCurrency</code></dt>
+          <dd>Change the currency being converted to.</dd>
+          <dt><code>listCurrencies</code></dt>
+          <dd>List or filter the supported currencies.</dd>
+          <dt><code>getHistoricalRate</code></dt>
+          <dd>Read the rate for a pair on a given day.</dd>
+          <dt><code>getRateTimeSeries</code></dt>
+          <dd>Read a range of rates and draw the chart.</dd>
+        </dl>
+      </section>
+
+      <section class="about__block">
+        <h2>Frequently asked questions</h2>
+
+        <h3>Where do Cambiaro's exchange rates come from?</h3>
+        <p>
+          Rates are European Central Bank reference rates, retrieved through the Frankfurter
+          API. The ECB publishes them once per working day at around 16:00 CET, so a rate is
+          dated to the day it was published rather than the moment you look at it.
+        </p>
+
+        <h3>How far back do the historical rates go?</h3>
+        <p>
+          Back to 4 January 1999 for most currencies, which is when the euro reference rates
+          began. Currencies added later start from their own first published date, and the date
+          picker limits you to the range each pair actually covers.
+        </p>
+
+        <h3>Can an AI agent use Cambiaro?</h3>
+        <p>
+          Yes. Cambiaro registers seven WebMCP tools on <code>document.modelContext</code>. An
+          agent can call them directly and receive typed results, with no DOM scraping. Every
+          call is reflected in the visible interface and logged in the Agent Activity panel.
+        </p>
+
+        <h3>Can I install Cambiaro and use it offline?</h3>
+        <p>
+          Yes. It is a Progressive Web App, so it installs to a phone home screen or desktop.
+          Rate responses are cached, so opening it without a network shows the last known rates
+          clearly labelled with the date they were published.
+        </p>
+
+        <h3>Does Cambiaro support cryptocurrency?</h3>
+        <p>
+          No. It covers the 165 fiat currencies tracked by the European Central Bank. Bitcoin
+          and other cryptocurrencies are out of scope.
+        </p>
+
+        <h3>How much does Cambiaro cost?</h3>
+        <p>Nothing. It is free and runs entirely in your browser.</p>
+      </section>
+
+      <p class="about__colophon">
+        Rates from the <a href="https://api.frankfurter.dev" rel="noopener">Frankfurter API</a>,
+        sourced from European Central Bank reference rates. Cambiaro is not affiliated with the
+        ECB. Rates are reference data for information, not a dealing quote.
+      </p>
+    </footer>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

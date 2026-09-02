@@ -1,0 +1,53 @@
+# Cambiaro
+
+> A currency converter for people and AI agents. Converts between 165 world
+> currencies using live and historical European Central Bank reference rates,
+> installs as an offline-capable Progressive Web App, and exposes every action
+> as a typed WebMCP tool that an AI agent can call directly.
+
+Site: https://cambiaro.programmersingh.dev/
+Cost: free. No account or API key is required.
+Source: https://github.com/theprogrammersingh/cambiaro
+
+## What it does
+
+- Converts an amount between any two of 165 fiat currencies, updating as you type.
+- Looks up historical rates for a specific past date, back to 4 January 1999.
+- Charts how a currency pair has moved over 7, 30 or 90 day ranges.
+- Installs to a home screen and keeps working offline using the last known rates.
+
+## Data source
+
+Exchange rates are European Central Bank reference rates, retrieved through the
+Frankfurter API (https://api.frankfurter.dev). The ECB publishes them once per
+working day at about 16:00 CET, so every rate is dated to its publication day
+rather than the moment of the request. Cryptocurrencies are not covered.
+Rates are reference data for information, not dealing quotes.
+
+## Agent interface (WebMCP)
+
+Cambiaro registers seven tools on `document.modelContext`, each with a JSON
+Schema and a typed result. An agent can discover them with `getTools()` and
+invoke them with `executeTool()`; no DOM scraping is needed. Every call is
+reflected in the visible UI and logged in the page's Agent Activity panel.
+
+- `convertCurrency` — convert an amount between two currencies, optionally on a past date.
+- `swapCurrencies` — swap the two currencies and reconvert.
+- `setBaseCurrency` — change the currency being converted from.
+- `setQuoteCurrency` — change the currency being converted to.
+- `listCurrencies` — list or filter the supported currencies.
+- `getHistoricalRate` — read the rate for a pair on a given day.
+- `getRateTimeSeries` — read a range of rates over a date range.
+
+Example:
+
+    const tools = await document.modelContext.getTools()
+    const convert = tools.find((t) => t.name === 'convertCurrency')
+    await document.modelContext.executeTool(convert, { amount: 200, from: 'EUR', to: 'INR' })
+
+## Answers to common questions
+
+- Rates come from the European Central Bank, once per working day.
+- History goes back to 4 January 1999 for most currencies.
+- It works offline once installed, showing the last known rates with their date.
+- It is free, and runs entirely client-side with no backend.
