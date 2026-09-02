@@ -1,0 +1,209 @@
+/* Design tokens — see Currency-Converter-Design-Guidelines.md §3, §4.
+   Components reference tokens only; no hex literals outside this file. */
+
+:root {
+  /* Color — light */
+  --color-bg: #f7f8fa;
+  --color-surface: #ffffff;
+  --color-surface-raised: #f1f2f5;
+  --color-border: #e2e4e9;
+  --color-text-primary: #12141a;
+  --color-text-secondary: #5b6270;
+  --color-accent: #2f6fed;
+  --color-success: #1f9d55;
+  --color-warning: #b8860b;
+  --color-error: #d64545;
+  --color-agent: #7c4fe0;
+
+  /* Tinted washes derived from the accents, for chips and pulses. */
+  --color-accent-wash: rgba(47, 111, 237, 0.1);
+  --color-agent-wash: rgba(124, 79, 224, 0.12);
+  --color-error-wash: rgba(214, 69, 69, 0.1);
+  --color-success-wash: rgba(31, 157, 85, 0.1);
+  --color-skeleton: rgba(18, 20, 26, 0.07);
+  --color-overlay: rgba(18, 20, 26, 0.32);
+
+  /* Spacing — 12px baseline grid, §2. Use these only. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgba(18, 20, 26, 0.04), 0 8px 24px rgba(18, 20, 26, 0.06);
+  --shadow-pop: 0 4px 12px rgba(18, 20, 26, 0.1), 0 16px 32px rgba(18, 20, 26, 0.12);
+
+  /* Type — a single variable sans stack for UI and numerals, §4 */
+  --font-sans: "Inter var", Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", sans-serif;
+
+  --size-hero: 40px;
+  --size-input: 20px;
+  --size-label: 13px;
+  --size-body: 14px;
+  --size-meta: 12px;
+
+  /* Motion — everything under 200ms, §6 */
+  --ease-out: cubic-bezier(0.16, 0.84, 0.44, 1);
+  --ease-in: cubic-bezier(0.55, 0, 0.85, 0.35);
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+
+  --tap-target: 44px;
+  --card-max-width: 520px;
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0f1115;
+    --color-surface: #181b21;
+    --color-surface-raised: #20242c;
+    --color-border: #2a2f3a;
+    --color-text-primary: #f5f6f8;
+    --color-text-secondary: #9aa1ae;
+    --color-accent: #5b8df6;
+    --color-success: #3fbe72;
+    --color-warning: #d9a441;
+    --color-error: #f0716b;
+    --color-agent: #a385f0;
+
+    --color-accent-wash: rgba(91, 141, 246, 0.16);
+    --color-agent-wash: rgba(163, 133, 240, 0.18);
+    --color-error-wash: rgba(240, 113, 107, 0.14);
+    --color-success-wash: rgba(63, 190, 114, 0.14);
+    --color-skeleton: rgba(245, 246, 248, 0.09);
+    --color-overlay: rgba(0, 0, 0, 0.5);
+
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+    --shadow-pop: 0 4px 12px rgba(0, 0, 0, 0.4), 0 16px 32px rgba(0, 0, 0, 0.45);
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --size-hero: 32px;
+    --size-input: 18px;
+    --size-label: 12px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--size-body);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Every monetary or rate value uses tabular figures so digits don't
+   jitter as they update, §4 / §9. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  font-size: var(--size-label);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+}
+
+.meta {
+  font-size: var(--size-meta);
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+:where(button, input, [tabindex], [role="combobox"], [role="option"]):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* An element a WebMCP tool just changed pulses violet for ~600ms, then
+   settles back to its normal styling. This is the main "an agent did
+   this" signal outside the activity log, §5.7. */
+@keyframes agent-pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--color-agent-wash);
+    border-color: var(--color-agent);
+  }
+  70% {
+    box-shadow: 0 0 0 6px transparent;
+    border-color: var(--color-agent);
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.is-agent-touched {
+  animation: agent-pulse 600ms var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Replace the pulse with a static highlight rather than a flash, §6. */
+  .is-agent-touched {
+    animation: none;
+    border-color: var(--color-agent) !important;
+    background-color: var(--color-agent-wash);
+  }
+}

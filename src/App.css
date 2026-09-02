@@ -1,0 +1,45 @@
+/* Single-column layout centred in the viewport, §2. The core conversion
+   sits above the fold; everything else stacks beneath it. */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  width: 100%;
+  max-width: var(--card-max-width);
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-4) var(--space-12);
+}
+
+.app__header {
+  width: 100%;
+  text-align: center;
+}
+
+.app__title {
+  margin: 0;
+  font-size: var(--size-input);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.app__subtitle {
+  margin: var(--space-1) 0 0;
+  font-size: var(--size-meta);
+  color: var(--color-text-secondary);
+}
+
+.app__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+}
+
+@media (max-width: 560px) {
+  .app {
+    padding: var(--space-6) var(--space-3) var(--space-8);
+    gap: var(--space-4);
+  }
+}
