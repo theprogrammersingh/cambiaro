@@ -17,10 +17,22 @@ No backend, no API key, no accounts.
 
 ```sh
 pnpm install
-pnpm dev      # http://localhost:5173
-pnpm build    # static output in dist/
-pnpm lint     # oxlint
+pnpm dev        # http://localhost:5173
+pnpm build      # static output in dist/
+pnpm preview    # serve the build — the service worker only runs here, not in dev
+pnpm lint       # oxlint
+pnpm gen:icons  # rebuild the icons and OG image from assets/brand/
 ```
+
+## Install and offline
+
+It's an installable PWA. The app shell is precached and rate responses are
+cached stale-while-revalidate, so opening it without a network shows the last
+known figures labelled "Last known rate, <date>" rather than an error.
+
+Icons and the social card are generated from the SVGs in `assets/brand/` by
+`scripts/generate-icons.mjs`, via resvg. ImageMagick can't be used here — it has
+no librsvg delegate and silently drops stroked paths, writing a blank file.
 
 ## The tool surface
 
