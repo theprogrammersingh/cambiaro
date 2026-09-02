@@ -1,5 +1,6 @@
 import { formatAmount, formatDate, formatRate } from '../lib/format.js'
 import { useAgentPulse } from '../hooks/useAgentPulse.js'
+import { useOnlineStatus } from '../hooks/useOnlineStatus.js'
 import { useConverter } from '../state/converterContext.js'
 import './ResultBlock.css'
 
@@ -12,7 +13,10 @@ import './ResultBlock.css'
 export function ResultBlock() {
   const { outcome, status, error, from, to, date, pulses } = useConverter()
   const pulsing = useAgentPulse(pulses.result)
+  const online = useOnlineStatus()
   const isHistorical = Boolean(date)
+  // Offline but still showing a figure means it came from the cached response.
+  const showingCached = !online && Boolean(outcome)
 
   return (
     <div className={`result${pulsing ? ' is-agent-touched' : ''}`}>
@@ -50,13 +54,19 @@ export function ResultBlock() {
           No rate published for that date.
         </p>
       ) : outcome ? (
-        <p className="result__message meta">
+        <p className={`result__message${showingCached ? ' result__message--warning' : ' meta'}`}>
+          {showingCached ? (
+            <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+              <path d="M8 2.5 15 13.5H1z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+              <path d="M8 6.8v3M8 11.6v.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          ) : null}
           <span className="tabular">
             1 {from} = {formatRate(outcome.rate)} {to}
           </span>
           <span aria-hidden="true">·</span>
           <span>
-            {isHistorical ? 'Rate as of ' : ''}
+            {showingCached ? 'Last known rate, ' : isHistorical ? 'Rate as of ' : ''}
             {formatDate(outcome.date)}
           </span>
         </p>
