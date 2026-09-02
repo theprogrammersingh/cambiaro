@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Cambiaro">
+  <!-- No corner radius: the platform applies its own mask over a full bleed. -->
+  <rect width="512" height="512" fill="#2F6FED"/>
+  <!-- Glyph scaled to 72% about centre, keeping it inside the safe circle. -->
+  <g transform="translate(256 256) scale(0.72) translate(-256 -256)"
+     fill="none" stroke="#FFFFFF" stroke-width="38" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M146 198 H350"/>
+    <path d="M302 150 L356 198 L302 246"/>
+    <path d="M366 314 H162"/>
+    <path d="M210 266 L156 314 L210 362"/>
+  </g>
+</svg>

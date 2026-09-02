@@ -1,12 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Cambiaro">
-  <!-- Solid accent ground. Violet stays reserved for agent activity, so the
-       brand deliberately uses the accent token alone. -->
-  <rect width="512" height="512" rx="112" ry="112" fill="#2F6FED"/>
+  <!-- Square, fully opaque: iOS applies its own corner mask to the Apple touch
+       icon, so transparent corners here would render as black. -->
+  <rect width="512" height="512" fill="#2F6FED"/>
   <g fill="none" stroke="#FFFFFF" stroke-width="38" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Upper arrow, pointing right. Mirrored exactly about x=256 by the lower one. -->
     <path d="M146 198 H350"/>
     <path d="M302 150 L356 198 L302 246"/>
-    <!-- Lower arrow, pointing left. -->
     <path d="M366 314 H162"/>
     <path d="M210 266 L156 314 L210 362"/>
   </g>
