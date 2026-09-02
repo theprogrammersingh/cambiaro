@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useConverter } from '../state/converterContext.js'
 import { SUPPORT, detectSupport, registerTool } from './adapter.js'
+import { exposedOrigins } from './embedder.js'
 import { buildTools } from './toolDefinitions.js'
 import { validateInput } from './validate.js'
 
@@ -25,6 +26,29 @@ export function useWebMcpTools() {
     const definitions = buildTools(() => contextRef.current)
     return definitions.map((definition) => ({
       ...definition,
+      /*
+       * `readOnly` is NOT `!mutates`, and conflating them is the obvious wrong
+       * move here. `mutates` is this page's own flag for "repaints the
+       * converter", which is why it gates the approval prompt. `readOnlyHint`
+       * is the spec's, and it means "does not modify its environment" — moving
+       * our own view is not that.
+       *
+       * The split matters most to an embedder. `convertCurrency` repaints the
+       * screen *and* answers a question; derived from `mutates` it would
+       * announce itself as mutating, and inside, say, an expense app that reads
+       * as "this might change my money" — the opposite of true. So the four
+       * tools that answer something are read-only, and the three that exist
+       * only to move the UI and have no answer to give are not.
+       *
+       * `untrustedContentHint` is true across the board: every result carries
+       * rate data fetched from a third party (the ECB, via Frankfurter). None
+       * of it is authored here, so none of it should be treated as trusted text
+       * by whatever is reading it.
+       */
+      annotations: {
+        readOnlyHint: definition.readOnly,
+        untrustedContentHint: true,
+      },
       /** The wrapper every caller goes through: validate, gate, run, log. */
       async execute(rawInput) {
         const live = contextRef.current
@@ -64,11 +88,17 @@ export function useWebMcpTools() {
 
   useEffect(() => {
     const controller = new AbortController()
+    /*
+     * Read once per registration pass, not per tool: every tool in a pass must
+     * be exposed to the same origin, and re-reading would let a mid-pass
+     * navigation split the surface in two.
+     */
+    const exposedTo = exposedOrigins()
 
     async function register() {
       try {
         for (const tool of tools) {
-          await registerTool(tool, { signal: controller.signal })
+          await registerTool(tool, { signal: controller.signal, exposedTo })
         }
       } catch (error) {
         if (error.name !== 'AbortError') setSupport(SUPPORT.UNSUPPORTED)
