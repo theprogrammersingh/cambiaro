@@ -1,4 +1,4 @@
-# Design Guidelines — Currency Converter (WebMCP-Enabled)
+# Design Guidelines — Cambiaro (WebMCP-Enabled)
 
 **Doc type:** Design Guideline
 **Owner:** Simar Preet Singh

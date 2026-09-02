@@ -1,4 +1,4 @@
-# Product Requirements Document — Currency Converter (WebMCP-Enabled)
+# Product Requirements Document — Cambiaro (WebMCP-Enabled)
 
 **Status:** Draft
 **Owner:** Simar Preet Singh

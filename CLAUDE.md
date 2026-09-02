@@ -4,14 +4,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-This is a **greenfield project**: `src/` is still the unmodified `create-vite` React template (`App.jsx` is the Vite/React splash counter, `index.css`/`App.css` hold template styles, `README.md` is the template README). None of the currency-converter product exists yet.
+**Cambiaro** is a built, working single-screen currency converter, deployed at
+`cambiaro.programmersingh.dev`. It doubles as a WebMCP reference implementation.
 
-The actual specification lives in two documents at the repo root, and they are the source of truth for what to build:
+Two specification documents at the repo root remain the source of truth for
+intent — read the relevant section before changing behaviour they cover:
 
-- `Currency-Converter-PRD.md` — scope, user stories, functional requirements, the WebMCP tool table, and Frankfurter API contract.
-- `Currency-Converter-Design-Guidelines.md` — layout, the CSS custom-property color tokens, type scale, per-component behavior, motion, a11y.
+- `Cambiaro-PRD.md` — scope, user stories, functional requirements, the WebMCP tool table, and Frankfurter API contract.
+- `Cambiaro-Design-Guidelines.md` — layout, the CSS custom-property color tokens, type scale, per-component behavior, motion, a11y.
 
-Read the relevant sections before implementing a feature rather than inferring intent from the scaffold. When the two docs and the template scaffold disagree (e.g. `index.css` defines `--accent: #aa3bff`, the guidelines define `--color-accent: #2F6FED`), the docs win — the template styles are meant to be replaced.
+Both predate implementation and are out of date in four specific ways, verified
+against the live API and the WebMCP spec:
+
+| Docs say | Actually |
+|---|---|
+| `navigator.modelContext` | Spec and polyfills use `document.modelContext`; the adapter tries document → navigator → internal registry |
+| `/v2/currencies` is a code→name map | An array of `{iso_code, name, symbol, start_date, end_date}` |
+| 201 currencies | 165 |
+| Future dates are rejected | They return `[]` with HTTP 200, so "no rate published" is a distinct state from an error |
 
 ## Commands
 
@@ -24,7 +34,17 @@ pnpm preview   # serve the production build
 pnpm lint      # oxlint (NOT eslint)
 ```
 
+`pnpm gen:icons` regenerates every PNG in `public/` from the source SVGs in
+`assets/brand/` via `@resvg/resvg-js`. ImageMagick is installed on this machine
+but **cannot** rasterize these files — it has no librsvg delegate and silently
+drops stroked paths and gradients, producing an empty image. Don't reach for it.
+
 There is no test runner configured. If tests are needed, adding one (e.g. Vitest) is a deliberate setup step, not an assumed existing capability.
+
+`pnpm lint` leaves ~6 warnings, all inherent to the fetch-on-input-change
+pattern (`set-state-in-effect`, two deliberate `exhaustive-deps` omissions that
+would otherwise loop, one false positive about a ref read inside an async
+callback). That is the expected baseline, not a regression to fix.
 
 ## Architecture notes
 
@@ -36,9 +56,22 @@ There is no test runner configured. If tests are needed, adding one (e.g. Vitest
 
 **State**: component state + context only. The PRD explicitly rules out a global state library at this scope.
 
+**The shared spine.** `src/state/ConverterProvider.jsx` owns all state and
+exposes one `actions` object. UI event handlers and WebMCP tool handlers call
+the *same* functions, differing only in an `origin` tag. This is what makes
+"every tool call is reflected in the UI" structural rather than a convention —
+preserve it. `useConverter` and `RANGES` live in `src/state/converterContext.js`
+(split out so the provider file only exports a component, for fast refresh).
+
+**PWA**: `vite-plugin-pwa` with `registerType: 'autoUpdate'`. Rate responses are
+cached stale-while-revalidate so the app opens offline with the last known
+figures. `devOptions` is deliberately **disabled** — a dev-mode service worker on
+`localhost:5173` is how a previous project's stale Workbox SW ended up hijacking
+this port.
+
 ### The WebMCP layer
 
-This is the point of the project, not an add-on. Every distinct user intent in the UI must also be registered as a typed tool on `navigator.modelContext` (or a polyfill when unavailable), per the tool table in PRD §7.5 — `convertCurrency`, `swapCurrencies`, `setBaseCurrency`/`setQuoteCurrency`, `listCurrencies`, `getHistoricalRate`, `getRateTimeSeries`. Do not collapse these into one general-purpose tool.
+This is the point of the project, not an add-on. Every distinct user intent in the UI must also be registered as a typed tool on `document.modelContext` (see the table above — the PRD's `navigator` spelling is stale), per the tool table in PRD §7.5 — `convertCurrency`, `swapCurrencies`, `setBaseCurrency`/`setQuoteCurrency`, `listCurrencies`, `getHistoricalRate`, `getRateTimeSeries`. Do not collapse these into one general-purpose tool.
 
 Invariants that shape most implementation decisions:
 
@@ -46,7 +79,7 @@ Invariants that shape most implementation decisions:
 - **Every tool call must be visible in the UI.** A tool that mutates state must drive the same React state a human interaction would, so the change is on screen; the Agent Activity panel logs `{time, tool, input, result/error}` in memory.
 - The panel's "Available tools" list reads each tool's own `description` field so agent-facing schemas and user-facing docs cannot drift.
 - Tools validate input against their JSON Schema and validate currency codes against the cached `/v2/currencies` list before hitting the API; they return structured errors shaped like Frankfurter's `{ message }` rather than throwing.
-- Feature-detect `navigator.modelContext` at load. Without it the app must remain fully usable for a human, with the panel showing an explicit unsupported state.
+- Feature-detect at load in `src/webmcp/adapter.js`. Without a surface the app must remain fully usable for a human, with the panel showing an explicit unsupported state and the built-in "Try a tool" console still exercising every tool.
 - `--color-agent` (violet) is reserved for agent-driven UI — the panel and the ~600ms pulse on any control a tool just changed. It is the only signal distinguishing "a human did this" from "an agent did this"; never reuse it for ordinary accents.
 
 ### API usage discipline

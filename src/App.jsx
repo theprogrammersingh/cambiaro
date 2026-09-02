@@ -38,7 +38,7 @@ function App() {
     <ConverterProvider>
       <div className="app">
         <header className="app__header">
-          <h1 className="app__title">Currency Converter</h1>
+          <h1 className="app__title">Cambiaro</h1>
           <p className="app__subtitle">
             Live and historical exchange rates. No account, no key.
           </p>

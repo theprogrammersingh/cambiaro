@@ -1,6 +1,10 @@
-# Currency Converter (WebMCP-enabled)
+# Cambiaro
 
-A single-screen currency converter built as a complete, readable reference for
+A fast, keyless currency converter, and a working WebMCP reference.
+
+**Live at [cambiaro.programmersingh.dev](https://cambiaro.programmersingh.dev)**
+
+Cambiaro is a single-screen currency converter built as a complete, readable reference for
 [WebMCP](https://github.com/webmachinelearning/webmcp): every distinct user
 intent in the UI is also registered as a typed, agent-invokable tool, so a
 browser agent can operate the page exactly as a person would — without
