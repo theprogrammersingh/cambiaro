@@ -2,9 +2,71 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <title>Cambiaro — Fast Currency Converter, Live &amp; Historical Rates</title>
+    <meta
+      name="description"
+      content="Convert between 165 world currencies with live and historical exchange rates. No ads, no account, no API key — and every action is available to AI agents via WebMCP."
+    />
+    <link rel="canonical" href="https://cambiaro.programmersingh.dev/" />
+
+    <!-- Matches the app background in each scheme so the browser chrome blends in -->
+    <meta name="theme-color" content="#F7F8FA" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0F1115" media="(prefers-color-scheme: dark)" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Currency Converter</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta name="application-name" content="Cambiaro" />
+    <meta name="apple-mobile-web-app-title" content="Cambiaro" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cambiaro" />
+    <meta property="og:title" content="Cambiaro — Fast Currency Converter" />
+    <meta
+      property="og:description"
+      content="Live and historical exchange rates for 165 currencies. No account, no key."
+    />
+    <meta property="og:url" content="https://cambiaro.programmersingh.dev/" />
+    <meta property="og:image" content="https://cambiaro.programmersingh.dev/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cambiaro — live and historical exchange rates." />
+    <meta property="og:locale" content="en" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cambiaro — Fast Currency Converter" />
+    <meta
+      name="twitter:description"
+      content="Live and historical exchange rates for 165 currencies. No account, no key."
+    />
+    <meta name="twitter:image" content="https://cambiaro.programmersingh.dev/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Cambiaro",
+        "url": "https://cambiaro.programmersingh.dev/",
+        "description": "Convert between 165 world currencies using live and historical exchange rates, with no account or API key required.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": [
+          "Live exchange rates for 165 currencies",
+          "Historical rates back to 1999",
+          "Rate history charts",
+          "Works offline once loaded",
+          "Agent-callable tools via WebMCP"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
