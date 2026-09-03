@@ -40,6 +40,7 @@ export function buildTools(getContext) {
     {
       name: 'convertCurrency',
       mutates: true,
+      readOnly: true,
       description:
         'Convert an amount from one currency to another, optionally as of a past date. Updates the converter on screen and returns the rate and converted total.',
       inputSchema: {
@@ -73,6 +74,7 @@ export function buildTools(getContext) {
     {
       name: 'swapCurrencies',
       mutates: true,
+      readOnly: false,
       description:
         'Swap the "from" and "to" currencies and reconvert the current amount.',
       inputSchema: { type: 'object', properties: {} },
@@ -98,6 +100,7 @@ export function buildTools(getContext) {
     {
       name: 'setBaseCurrency',
       mutates: true,
+      readOnly: false,
       description:
         'Change the currency being converted from, leaving the amount unchanged.',
       inputSchema: {
@@ -120,6 +123,7 @@ export function buildTools(getContext) {
     {
       name: 'setQuoteCurrency',
       mutates: true,
+      readOnly: false,
       description:
         'Change the currency being converted to, leaving the amount unchanged.',
       inputSchema: {
@@ -142,6 +146,7 @@ export function buildTools(getContext) {
     {
       name: 'listCurrencies',
       mutates: false,
+      readOnly: true,
       description:
         'List the supported currencies, each with its three-letter code and full name. Pass a query to filter by code or name.',
       inputSchema: {
@@ -180,6 +185,7 @@ export function buildTools(getContext) {
     {
       name: 'getHistoricalRate',
       mutates: true,
+      readOnly: true,
       description:
         'Get the exchange rate between two currencies on a specific past date. The converter on screen moves to that date so the result stays visible.',
       inputSchema: {
@@ -214,6 +220,7 @@ export function buildTools(getContext) {
     {
       name: 'getRateTimeSeries',
       mutates: true,
+      readOnly: true,
       description:
         'Get a series of exchange rates for a currency pair over a date range, and draw it on the chart. Long ranges are grouped by week or month to keep the response small.',
       inputSchema: {

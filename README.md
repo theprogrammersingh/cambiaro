@@ -49,7 +49,37 @@ Seven tools, one per user intent rather than a single do-everything entry point:
 | `getRateTimeSeries` | Read a range of rates and draw the chart |
 
 They are registered on mount against `document.modelContext` and unregistered
-by aborting a shared `AbortSignal`.
+by aborting a shared `AbortSignal`. Each carries `readOnlyHint` — true for the
+four that answer a question (`convertCurrency`, `listCurrencies`,
+`getHistoricalRate`, `getRateTimeSeries`), false for the three that exist only
+to move the UI — and `untrustedContentHint`, always true, because every result
+carries ECB rate data fetched from Frankfurter rather than authored here.
+
+Note that `readOnlyHint` is deliberately *not* the inverse of the internal
+`mutates` flag: `mutates` means "repaints the converter", which is what gates
+the approval prompt, while `readOnlyHint` means "does not modify its
+environment". Repainting our own view is not the latter.
+
+### Embedding it in another app
+
+A WebMCP tool is visible only to its own document by default, so an app that
+embeds Cambiaro in an iframe discovers nothing at all. To be callable from the
+embedding app, load the page with that app's origin in the `actuo` query
+parameter:
+
+```html
+<iframe src="https://cambiaro.programmersingh.dev/?actuo=https%3A%2F%2Fyour-app.example"
+        allow="tools"></iframe>
+```
+
+Registration then names that one origin in `exposedTo`, and the embedder's
+`getTools({ fromOrigins: ['https://cambiaro.programmersingh.dev'] })` returns
+all seven. Anything that is not a parseable absolute URL is ignored, and with no
+parameter the page registers exactly as it did before — same-origin only.
+
+The origin is read at runtime rather than baked into a constant because the
+embedding app's hostname is its deployment detail, not ours; a hardcoded
+allowlist would need a release here every time it changed.
 
 ### Seeing it work
 

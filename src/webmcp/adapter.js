@@ -40,19 +40,47 @@ export function detectSupport() {
  * Register one tool, aborting registration when `signal` fires — the
  * dynamic-registration lifecycle the spec describes.
  * Resolves to true when a real surface accepted the tool.
+ *
+ * `exposedTo` is what makes a tool reachable from a page that embeds this one.
+ * Omitted (or empty) it stays same-origin, which is the standalone default —
+ * see `embedder.js`. It is spread in rather than always passed because an empty
+ * array is not the same as absent to every implementation, and "no embedder"
+ * should register exactly the call this page made before the option existed.
  */
-export async function registerTool(tool, { signal }) {
+export async function registerTool(tool, { signal, exposedTo }) {
   const { surface } = resolveSurface()
   if (!surface?.registerTool) return false
 
-  await surface.registerTool(
-    {
-      name: tool.name,
-      description: tool.description,
-      inputSchema: tool.inputSchema,
-      execute: tool.execute,
-    },
-    { signal },
-  )
+  const descriptor = {
+    name: tool.name,
+    description: tool.description,
+    inputSchema: tool.inputSchema,
+    execute: tool.execute,
+    annotations: tool.annotations,
+  }
+
+  if (exposedTo?.length) {
+    try {
+      await surface.registerTool(descriptor, { signal, exposedTo })
+      return true
+    } catch (error) {
+      /*
+       * Not every surface supports cross-origin exposure: the WebMCP polyfill
+       * rejects a non-empty `exposedTo` outright with NotSupportedError, and a
+       * native implementation can refuse it when the embedding permissions
+       * policy withholds the origin.
+       *
+       * Falling through to a plain registration is the difference between
+       * "embedded, but the host cannot see the tools" and "embedded, and the
+       * page has no tools at all" — the caller treats a throw here as the
+       * browser not supporting WebMCP and drops the whole surface. Degrading to
+       * same-origin keeps the converter fully usable by the person looking at
+       * it, which is the outcome that matters most.
+       */
+      if (error?.name === 'AbortError') throw error
+    }
+  }
+
+  await surface.registerTool(descriptor, { signal })
   return true
 }
